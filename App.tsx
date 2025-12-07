@@ -14,7 +14,7 @@ export default function App() {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
 
   // App Data State (Shared "Backend")
-  const [activeTab, setActiveTab] = useState<Tab>('ITINERARY');
+  const [activeTab, setActiveTab] = useState<Tab>('INFO');
   const [itinerary, setItinerary] = useState<DayItinerary[]>(INITIAL_ITINERARY);
   const [expenses, setExpenses] = useState<ExpenseItem[]>(INITIAL_EXPENSES);
   const [exchangeRate, setExchangeRate] = useState<number>(EXCHANGE_RATE_DEFAULT);
@@ -93,10 +93,10 @@ export default function App() {
           </div>
           <div className="flex items-center gap-3">
              <div className="text-xs font-medium px-3 py-1.5 bg-cream-section rounded-full text-soft-gray">
+               {activeTab === 'INFO' && '行前手冊'}
                {activeTab === 'ITINERARY' && '行程表'}
                {activeTab === 'CURRENCY' && '匯率計算'}
                {activeTab === 'EXPENSE' && '旅行記帳'}
-               {activeTab === 'INFO' && '行前手冊'}
             </div>
             <button onClick={() => setCurrentUser(null)} className={`w-8 h-8 rounded-full flex items-center justify-center text-sm ${currentUser.color}`}>
               {currentUser.avatar}
@@ -137,6 +137,12 @@ export default function App() {
       <nav className="fixed bottom-0 w-full bg-white/95 backdrop-blur-md border-t border-stone-100 pb-safe-bottom z-30 shadow-[0_-5px_20px_rgba(0,0,0,0.03)] rounded-t-3xl">
         <div className="max-w-md mx-auto flex justify-between items-center h-20 px-4">
            <NavButton 
+              active={activeTab === 'INFO'} 
+              onClick={() => setActiveTab('INFO')} 
+              icon={<Info size={22} />} 
+              label="手冊" 
+           />
+           <NavButton 
               active={activeTab === 'ITINERARY'} 
               onClick={() => setActiveTab('ITINERARY')} 
               icon={<Map size={22} />} 
@@ -153,12 +159,6 @@ export default function App() {
               onClick={() => setActiveTab('EXPENSE')} 
               icon={<Wallet size={22} />} 
               label="記帳" 
-           />
-           <NavButton 
-              active={activeTab === 'INFO'} 
-              onClick={() => setActiveTab('INFO')} 
-              icon={<Info size={22} />} 
-              label="手冊" 
            />
         </div>
       </nav>

@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { ExpenseItem, User } from '../types';
 import { USERS } from '../constants';
-import { Wallet, Plus, Trash2, User as UserIcon, Users, Lock, EyeOff, Globe } from 'lucide-react';
+import { Wallet, Plus, Trash2, User as UserIcon, Lock, Receipt } from 'lucide-react';
 
 interface ExpenseViewProps {
   expenses: ExpenseItem[];
@@ -42,40 +42,26 @@ const ExpenseView: React.FC<ExpenseViewProps> = ({ expenses, setExpenses, rate, 
     e.type === 'SHARED' || (e.type === 'PERSONAL' && e.ownerId === currentUser.id)
   );
 
-  const totalSharedJPY = expenses.filter(e => e.type === 'SHARED').reduce((acc, curr) => acc + curr.amount, 0);
   const myPersonalJPY = expenses.filter(e => e.type === 'PERSONAL' && e.ownerId === currentUser.id).reduce((acc, curr) => acc + curr.amount, 0);
 
   return (
     <div className="px-4 pt-6 pb-24 space-y-6 animate-fade-in">
         
-        {/* Total Summary Cards */}
-        <div className="grid grid-cols-2 gap-4">
-             {/* Shared Total */}
-            <div className="bg-soft-cocoa text-white p-5 rounded-[28px] shadow-soft relative overflow-hidden">
-                <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-white/10 rounded-full blur-xl"></div>
-                <div className="relative z-10">
-                    <div className="flex items-center gap-2 opacity-80 mb-2">
-                        <Users size={16} />
-                        <span className="text-xs font-bold">公款總支出</span>
-                    </div>
-                    <div className="text-2xl font-bold">¥{totalSharedJPY.toLocaleString()}</div>
-                    <div className="text-white/60 text-[10px] mt-1">
-                        ≈ NT$ {Math.round(totalSharedJPY * rate).toLocaleString()}
-                    </div>
-                </div>
-            </div>
-
-            {/* Personal Total */}
-            <div className="bg-white text-soft-cocoa p-5 rounded-[28px] shadow-soft border border-stone-50 relative overflow-hidden">
-                <div className="relative z-10">
-                    <div className="flex items-center gap-2 text-soft-gray mb-2">
+        {/* Total Summary - Only Personal */}
+        <div className="bg-white text-soft-cocoa p-5 rounded-[28px] shadow-soft border border-stone-50 relative overflow-hidden">
+            <div className="relative z-10 flex justify-between items-center">
+                <div>
+                    <div className="flex items-center gap-2 text-soft-gray mb-1">
                         <Lock size={14} />
-                        <span className="text-xs font-bold">個人私帳</span>
+                        <span className="text-xs font-bold">個人私帳總計</span>
                     </div>
                     <div className="text-2xl font-bold">¥{myPersonalJPY.toLocaleString()}</div>
                     <div className="text-soft-gray text-[10px] mt-1">
                         僅自己可見
                     </div>
+                </div>
+                 <div className="w-12 h-12 bg-cream-section rounded-full flex items-center justify-center text-soft-gray">
+                    <Wallet size={20} />
                 </div>
             </div>
         </div>
@@ -89,7 +75,7 @@ const ExpenseView: React.FC<ExpenseViewProps> = ({ expenses, setExpenses, rate, 
                        onClick={() => setNewExpType('SHARED')}
                        className={`px-3 py-1 rounded-full text-xs font-bold transition-all ${newExpType === 'SHARED' ? 'bg-white shadow-sm text-soft-cocoa' : 'text-soft-gray'}`}
                     >
-                        公帳
+                        代墊
                     </button>
                     <button 
                        onClick={() => setNewExpType('PERSONAL')}
@@ -128,7 +114,7 @@ const ExpenseView: React.FC<ExpenseViewProps> = ({ expenses, setExpenses, rate, 
                     </div>
                 </div>
                 <button onClick={addExpense} className="w-full py-3 bg-soft-cocoa text-white rounded-xl font-bold flex items-center justify-center gap-2 active:scale-95 transition-transform">
-                    <Plus size={16} /> <span>新增 {newExpType === 'SHARED' ? '公款' : '個人'} 紀錄</span>
+                    <Plus size={16} /> <span>新增 {newExpType === 'SHARED' ? '代墊' : '個人'} 紀錄</span>
                 </button>
             </div>
         </div>
@@ -148,12 +134,15 @@ const ExpenseView: React.FC<ExpenseViewProps> = ({ expenses, setExpenses, rate, 
                             <div className="flex-1">
                                 <div className="flex items-center gap-2 mb-1">
                                     <span className="font-bold text-soft-cocoa">{item.title}</span>
-                                    {item.type === 'PERSONAL' && <Lock size={10} className="text-soft-gray" />}
+                                    {item.type === 'PERSONAL' ? 
+                                        <Lock size={12} className="text-soft-gray" /> :
+                                        <Receipt size={12} className="text-butter-yellow" />
+                                    }
                                 </div>
                                 <div className="flex items-center gap-2">
                                      <div className={`text-[10px] px-2 py-0.5 rounded-full flex items-center gap-1 ${payer?.color} bg-opacity-30 text-soft-cocoa`}>
                                         <span>{payer?.avatar}</span>
-                                        <span>{payer?.name} 先付</span>
+                                        <span>{payer?.name} {item.type === 'SHARED' ? '代墊' : '付'}</span>
                                      </div>
                                 </div>
                             </div>

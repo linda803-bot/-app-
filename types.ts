@@ -22,6 +22,7 @@ export interface ItineraryItem {
   location: string;
   description: string;
   userNotes?: string;
+  url?: string; // New field for external website
   type: ActivityType;
   highlights: string[];
   transportMode?: 'WALK' | 'TRAIN' | 'BUS' | 'TAXI' | 'FLIGHT' | 'NONE'; 

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>ZenTravel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              'cream-bg': '#fdfbf7',     // Main background
+              'cream-card': '#ffffff',   // Card background
+              'cream-section': '#f7f4ef',// Section background
+              'butter-yellow': '#fff0b3', // Accent
+              'butter-soft': '#fff9e6',  // Light accent
+              'soft-cocoa': '#5d5550',   // Main Text
+              'soft-gray': '#9ca3af',    // Secondary Text
+              'pastel-blue': '#e3effb',
+              'pastel-pink': '#ffe8f0',
+              'pastel-green': '#e6f5e6',
+              'pastel-purple': '#f0e6fa',
+            },
+            fontFamily: {
+              sans: ['"Quicksand"', '"Noto Sans TC"', 'sans-serif'],
+            },
+            boxShadow: {
+              'soft': '0 4px 20px -2px rgba(200, 190, 180, 0.25)',
+              'inner-soft': 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.02)',
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      body {
+        background-color: #fdfbf7;
+        font-family: 'Noto Sans TC', sans-serif;
+        color: #5d5550;
+      }
+      /* Hide scrollbar for Chrome, Safari and Opera */
+      .no-scrollbar::-webkit-scrollbar {
+          display: none;
+      }
+      /* Hide scrollbar for IE, Edge and Firefox */
+      .no-scrollbar {
+          -ms-overflow-style: none;  /* IE and Edge */
+          scrollbar-width: none;  /* Firefox */
+      }
+      .animate-fade-in {
+        animation: fadeIn 0.4s ease-out;
+      }
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://aistudiocdn.com/react@^19.2.1",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.1/",
+    "react/": "https://aistudiocdn.com/react@^19.2.1/",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.31.0",
+    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.556.0"
+  }
+}
+</script>
+</head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
